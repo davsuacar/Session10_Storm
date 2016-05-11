@@ -1,5 +1,5 @@
+import backtype.storm.tuple.Fields
 import backtype.storm.{ Config, LocalCluster, StormSubmitter }
-import backtype.storm.testing.TestWordSpout
 import backtype.storm.topology.TopologyBuilder
 import backtype.storm.utils.Utils
 
@@ -11,8 +11,12 @@ object CounterTopology {
 
     val builder: TopologyBuilder = new TopologyBuilder()
 
-    builder.setSpout("LectorSpout", new LectorSpout(), 10)
+    builder.setSpout("LectorSpout", new LectorSpout(), 1)
     builder.setBolt("SplitBolt", new SplitBolt(), 3).shuffleGrouping("LectorSpout")
+    builder.setBolt("ContadorParcialBolt", new ContadorParcialBolt(), 3)
+      .fieldsGrouping("1", new Fields("ah"))
+      .fieldsGrouping("2", new Fields("ht"))
+      .fieldsGrouping("3", new Fields("tz"))
 
     val config = new Config()
     config.setDebug(true)
