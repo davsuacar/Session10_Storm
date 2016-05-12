@@ -5,16 +5,36 @@ import backtype.storm.topology.OutputFieldsDeclarer
 import backtype.storm.topology.base.BaseRichBolt
 import backtype.storm.tuple.{Fields, Values, Tuple}
 
+import scala.collection.mutable
+
 /**
   * Created by davidsuarez on 8/05/16.
   */
 class ContadorParcialBolt extends BaseRichBolt {
 
   var collector : OutputCollector = _
+  var totalWords : Int = 0
+  var uniqueWords : Int = 0
+  var dictionary : Map[String, Int] = Map()
 
   override def execute(input: Tuple): Unit = {
-    val word = input.getString(0)
-    print("Contador Parcial Bolt: " + word)
+    val words = input.getString(0).split(" ")
+    for(word <- words) {
+      if (dictionary.contains(word)){
+        val counter = dictionary(word) + 1
+        dictionary = dictionary + (word -> counter)
+      } else {
+        dictionary += (word -> 1)
+      }
+    }
+
+
+    print (dictionary + "\n")
+    for(key <- dictionary.keys) {
+      collector.emit(new Values(key))
+    }
+
+    // print("Contador Parcial Bolt: " + dictionary(word))
   }
 
   override def prepare(stormConf: util.Map[_, _], context: TopologyContext, collector: OutputCollector): Unit = {
@@ -22,7 +42,6 @@ class ContadorParcialBolt extends BaseRichBolt {
   }
 
   override def declareOutputFields(declarer: OutputFieldsDeclarer): Unit = {
-
+    declarer.declare(new Fields("word"))
   }
-
 }

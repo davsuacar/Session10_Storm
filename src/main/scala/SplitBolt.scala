@@ -13,11 +13,9 @@ class SplitBolt extends BaseRichBolt {
   var collector : OutputCollector = _
 
   override def execute(input: Tuple): Unit = {
-    val actorProperties = input.getString(0).replace(".", "").split(" ")
-    print("Tuple: " + actorProperties)
-    for (a <- actorProperties) {
-      collector.emit(new Values(a))
-    }
+    val sentence = input.getString(0).replace(".", " ")
+    print("Sentence: " + sentence + "\n")
+    collector.emit(new Values(sentence))
   }
 
 

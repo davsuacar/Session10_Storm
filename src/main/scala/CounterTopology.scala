@@ -13,10 +13,8 @@ object CounterTopology {
 
     builder.setSpout("LectorSpout", new LectorSpout(), 1)
     builder.setBolt("SplitBolt", new SplitBolt(), 3).shuffleGrouping("LectorSpout")
-    builder.setBolt("ContadorParcialBolt", new ContadorParcialBolt(), 3)
-      .fieldsGrouping("1", new Fields("ah"))
-      .fieldsGrouping("2", new Fields("ht"))
-      .fieldsGrouping("3", new Fields("tz"))
+    builder.setBolt("ContadorParcialBolt", new ContadorParcialBolt(), 4).fieldsGrouping("SplitBolt", new Fields("SplitBolt"))
+    builder.setBolt("ContadorTotalBolt", new ContadorTotalesBolt(), 4).shuffleGrouping("ContadorParcialBolt")
 
     val config = new Config()
     config.setDebug(true)
