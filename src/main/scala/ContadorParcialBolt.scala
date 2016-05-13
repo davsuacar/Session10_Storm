@@ -28,13 +28,16 @@ class ContadorParcialBolt extends BaseRichBolt {
       }
     }
 
-
     print (dictionary + "\n")
+    var counter = 0
     for(key <- dictionary.keys) {
+      counter += dictionary(key)
       collector.emit(new Values(key))
     }
 
-    // print("Contador Parcial Bolt: " + dictionary(word))
+    println("Contador Parcial Bolt got the following results:")
+    println("Total number of words: " + counter)
+    println("Total number of unique words:" + dictionary.keys.size)
   }
 
   override def prepare(stormConf: util.Map[_, _], context: TopologyContext, collector: OutputCollector): Unit = {

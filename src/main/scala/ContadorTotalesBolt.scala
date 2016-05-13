@@ -25,8 +25,12 @@ class ContadorTotalesBolt extends BaseRichBolt {
       dictionaryTotal += (word -> 1)
     }
 
-    print (dictionaryTotal.keys + "\n")
-    print ("LLEGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa\n")
+    println("Contador Total Bolt got the following results:")
+    println("Dictionary of words:")
+    for(key <- dictionaryTotal.keys) {
+      println(key)
+    }
+
 
   }
 

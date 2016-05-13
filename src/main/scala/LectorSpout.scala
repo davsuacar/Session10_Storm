@@ -21,7 +21,7 @@ class LectorSpout extends BaseRichSpout {
   }
 
   override def nextTuple(): Unit = {
-    val words = List("primera frase cuatro palabras", "primera frase con cinco palabras", "primera frase con seis palabras largas")
+    val words = List("primera frase cuatro palabras", "primera frase con cinco palabras", "primera frase larga con seis palabras")
     val rand = Random.nextInt(words.length)
     val word = words(rand)
     collector.emit(new Values(word))
