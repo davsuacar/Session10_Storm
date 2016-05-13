@@ -1,0 +1,30 @@
+***
+Debido a que yo he creado una simulación de streaming de frases en vez de leer un libro, las medidas de performance que he tomado han sido relativas a la paralelización sobre mi ordenador para ver qué influencia tiene dicho parámetro sobre la velocidad de la aplicación. Un siguiente paso interesante habría sido realizar pruebas sobre un cluster con esta misma aplicación.
+***
+
+
+35 Segundos:
+
+	Paralelización 1:
+		Contador Parcial Bolt got the following results:
+		Total number of words: 1073
+		Total number of unique words:8
+
+	Paralelización de 5:
+		No llega información a ningún Bolt porque se dedica solo a enviar tuplas y no le da tiempo a ejecutar ningún bolt.
+
+	Paralelización de 1 en Spout y 5 en todos los bolts:
+
+		Contador Parcial Bolt got the following results:
+		Total number of words: 7578
+		Total number of unique words:6
+
+	Paralelización de 1 en Spout y 1 en Split bolt y 5 en el resto de bolts:
+
+		Contador Parcial Bolt got the following results:
+		Total number of words: 2436
+		Total number of unique words:6
+
+		No puedo hacer pruebas con una paralelización más alta de 5 ni más tiempo de 35s porque mi ordenador se queda bloqueado por falta de memoria. (8GB)
+
+		La conclusión es que como podemos ver en los resultados es que cuanta mayor paralelización mayor analisis de resultados obtenemos aunque hay un punto en el que chocamos con la limitaciones de hardware, por lo que por mucha paralelización que pongamos no aumenta el performance.

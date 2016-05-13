@@ -12,9 +12,9 @@ object CounterTopology {
     val builder: TopologyBuilder = new TopologyBuilder()
 
     builder.setSpout("LectorSpout", new LectorSpout(), 1)
-    builder.setBolt("SplitBolt", new SplitBolt(), 3).shuffleGrouping("LectorSpout")
-    builder.setBolt("ContadorParcialBolt", new ContadorParcialBolt(), 4).fieldsGrouping("SplitBolt", new Fields("SplitBolt"))
-    builder.setBolt("ContadorTotalBolt", new ContadorTotalesBolt(), 4).shuffleGrouping("ContadorParcialBolt")
+    builder.setBolt("SplitBolt", new SplitBolt(), 1).shuffleGrouping("LectorSpout")
+    builder.setBolt("ContadorParcialBolt", new ContadorParcialBolt(), 5).fieldsGrouping("SplitBolt", new Fields("SplitBolt"))
+    builder.setBolt("ContadorTotalBolt", new ContadorTotalesBolt(), 5).shuffleGrouping("ContadorParcialBolt")
 
     val config = new Config()
     config.setDebug(true)
